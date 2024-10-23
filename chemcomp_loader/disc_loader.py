@@ -166,7 +166,7 @@ class Disc_class:
         '''
         Function that prints the attributes of the Disc class.
         '''
-        [print(attribute) for attribute in dir(self) if attribute[0:1] != '__']
+        [print(attribute) for attribute in dir(self) if attribute[0:2] != '__']
 
         
 class Disc_gas:
