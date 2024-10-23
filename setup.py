@@ -13,7 +13,6 @@ setup(
         author_email="joepw1@hotmail.com",
         description=DESCRIPTION,
         long_description=LONG_DESCRIPTION,
-        download_url='https://github.com/AstroWilliams/chemcomp_loader/archive/refs/tags/v0.4.2.tar.gz',
         packages=find_packages(),
         install_requires=['tables', 'numpy', 'matplotlib', 'astropy'], # add any additional packages that 
         # needs to be installed along with your package. Eg: 'caer'
