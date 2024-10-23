@@ -41,8 +41,9 @@ class Disc_class:
     def __init__(self, file_path, config_file_path):
         self.load_disc(file_path)
         self.load_parameters_from_config(config_file_path)
-        self.gas    = Disc_gas(self)
-        self.dust   = Disc_dust(self)
+        self.gas      = Disc_gas(self)
+        self.dust     = Disc_dust(self)
+        self.icelines = Disc_icelines(self)
     
 
     def load_disc(self, file_path):
@@ -166,9 +167,9 @@ class Disc_class:
         '''
         Function that prints the attributes of the Disc class.
         '''
-        [print(attribute) for attribute in dir(self) if attribute[0:1] != '__']
+        [print(attribute) for attribute in dir(self) if attribute[0:2] != '__']
 
-        
+
 class Disc_gas:
     '''
     Class that contains the gas surface densities of the disc.
@@ -202,6 +203,45 @@ class Disc_dust:
         for molecule, gas_component in zip(molecule_array,
                                            super.sigma_dust_components[:,:,1].swapaxes(0,2).swapaxes(1,2)):
             setattr(self, molecule, gas_component)
+
+
+class Disc_icelines:
+    '''
+    Class that contains indexes of ice-lines of chemical species in the disc.
+    Attributes can be accessed via e.g. self.icelines.CO inside Disc_class.
+    '''
+    def __init__(self, super):
+        positions = np.array([self.get_position_of_ice(super.T[i,:]) for i in range(len(super.T))]).swapaxes(0, 1)
+        for molecule, idx in zip(iceline_names, positions):
+            setattr(self, molecule, idx)
+
+    def get_position_of_ice(self, T: np.array) -> np.array:
+        """
+        Function taken straight from the chemcomp files. (https://github.com/AaronDavidSchneider/chemcomp)
+        Code taken straight from `/chemcomp/chemcomp/disks/_chemistry.py
+        Full credit to Aaron David Schneider & Betram Bitsch.
+
+        function that can be used to determine the indicees of the icelines
+        This index is the index of the first cell in r/T that has no gas in sigma
+
+        gas | gas | gas | solid | solid | solid
+                           idx
+
+        Parameters
+        ----------
+        T: temperature N-dimensional array in cgs
+
+        Returns
+        -------
+        idx: position of icelines
+
+        """
+        # exclude phantom iceline of rest_mol
+        idx = np.squeeze(np.searchsorted(-T, -np.array(iceline_temperatures), side="right"))
+        # np.squeeze uses 1e-6 s. Total: 5.3e-6 s
+        idx = np.minimum(idx, T.size - 2)
+
+        return idx
 
 
 class Disc_chemistry:
