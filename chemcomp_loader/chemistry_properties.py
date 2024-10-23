@@ -36,17 +36,26 @@ molecule_array = [
     "Al2O3",
     "TiO",
 ]
+
 iceline_names = [
-                "CO & N2",
-                "CH4",
-                "CO2",
-                "H2O & H2S",
-                "Fe3O4",
-                "NaAlSi3O8 & KAlSi3O8",
-                "Mg2SiO4 & Fe2O3",
-                "VO",
-                "MgSiO3",
-                "Al2O3",
-                "TiO",
-            ]
-iceline_temperatures = [20, 30, 70, 150, 371, 970, 1354, 1423, 1500, 1653, 2000]
+    "rest",
+    "CO",
+    "N2",
+    "CH4",
+    "CO2",
+    "NH3",
+    "trapped_CO_water",
+    "H2O",
+    "Fe3O4",
+    "C",
+    "FeS",
+    "NaAlSi3O8",
+    "KAlSi3O8",
+    "Mg2SiO4",
+    "Fe2O3",
+    "VO",
+    "MgSiO3",
+    "Al2O3",
+    "TiO",
+]
+iceline_temperatures = [0, 20, 20, 30, 70, 90, 150, 150, 371, 970, 631, 704, 958, 1006, 1354, 1357, 1423, 1500, 1653, 2000]
