@@ -7,7 +7,7 @@ from .import_config import import_config, eval_kwargs
 from .chemistry_properties import *
 
 AU = (1*u.au).cgs.value  # define the astronomical unit conversion from cgs
-Myr = (1*u.Myr).cgs.value # define the Megayear unit conversion from cgs
+Myr = (1*u.Myr).cgs.value  # define the Megayear unit conversion from cgs
 
 
 def instructions():
@@ -179,7 +179,7 @@ class Disc_gas:
         # Disc_gas does not need to inherit any components of super.
         # Elemental distributions
         for element, gas_component in zip(element_array,
-                                          super.sigma_g_components[:,:,0,:].swapaxes(0,2).swapaxes(1,2)):
+                                          super.sigma_g_components[:,:,0].swapaxes(0,2).swapaxes(1,2)):
             setattr(self, element, gas_component)        
 
         # Molecules
@@ -195,14 +195,14 @@ class Disc_dust:
     '''
     def __init__(self, super):
         # Elemental distributions
-        for element, gas_component in zip(element_array,
+        for element, dust_component in zip(element_array,
                                           super.sigma_dust_components[:,:,0].swapaxes(0,2).swapaxes(1,2)):
-            setattr(self, element, gas_component)        
+            setattr(self, element, dust_component)
 
         # Molecules
-        for molecule, gas_component in zip(molecule_array,
+        for molecule, dust_component in zip(molecule_array,
                                            super.sigma_dust_components[:,:,1].swapaxes(0,2).swapaxes(1,2)):
-            setattr(self, molecule, gas_component)
+            setattr(self, molecule, dust_component)
 
 
 class Disc_icelines:
